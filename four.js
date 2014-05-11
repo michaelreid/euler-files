@@ -13,7 +13,7 @@
 // Generate two arrays to test:
 
 // set limits of array:
-var lowest = 997;
+var lowest = 901;
 var highest = 999;
 
 var createdArray = [];
@@ -61,8 +61,12 @@ var establishTestSet = function(setOne, setTwo) {
   return uniqueSet;
 };
 
-console.log(establishTestSet(floor, ceiling));
 
+// print to console all of the test numbers that are multiples between
+// the floor and ceiling of 3 digit numbers
+// console.log(establishTestSet(floor, ceiling));
+
+var testSet = establishTestSet(floor, ceiling);
 
 
 
@@ -74,49 +78,77 @@ console.log(establishTestSet(floor, ceiling));
 // declare a new object: Palindrome - a number that is same forwards as backwards
 
 var number = 999;
+var number2 = 789;
 
-// A new palindrome Object
-var palindrome = {};
 
 // a function to convert a number to an array
-var forwards = function(num) {
+var convertToArray = function(num) {
   var str = num.toString();
   return str.split('');
 };
 
 
-// a function to reverse the 'forward' property
-var reverse = function(arr) {
+// a function to patch the reversed array back into a number
+
+var backwards = function(arr) {
+  // loop through array starting from end and
+  // then push to new array
   var result = [];
   var len = arr.length;
   for (var i = len - 1; i >= 0; i--) {
     result.push(arr[i]);
   }
-  return result;
+   var join = result.join('');
+   return parseInt(join);
+}
+
+
+
+// a function to test if a number is a palindrome
+
+var testForPalindromicity = function(num) {
+  var forwardsArr = convertToArray(num);
+  var reverse = backwards(forwardsArr);
+  // test if number passed to function is same as
+  // the number reversed then it is a Palindrome
+  if ( num === reverse) {
+    return true;
+  }
+  else {
+    return false;
+  }
 };
-
-// a function to test if 'forwards' is same as 'backwards'
-
-// code goes here
-
-
-// declaring the properties of a palindrome
-
-palindrome['number'] = number;
-
-palindrome['forward'] = forwards(palindrome['number']);
-
-palindrome['backward'] = reverse(palindrome['forward']);
-
-
-
-
-console.log(palindrome);
-
-
 
 
 
 
 // 3. Test set of numbers from (1) to see if meet criteria of Palindrome (2):
 // ==========================================================================
+
+// an example array of numbers to test function
+var arr1 = [ 4332, 23330, 987656789, 234, 784, 33333 ];
+
+
+// pass an array of numbers to a funcition
+// test each for Palindrome:
+var testforP = function(arr) {
+  var result = [];
+  var len = arr.length;
+  // loop through numbers in array
+  for (var i = 0; i < len; i++) {
+    // if a number is a palindrome then pass
+    // the number and 'true' as a sub-array
+    // to the final 'result' array
+    if (testForPalindromicity(arr[i]) == true) {
+      var arrTrue = [];
+      arrTrue.push(arr[i], testForPalindromicity(arr[i]));
+      result.push(arrTrue);
+    }
+  }
+  return result;
+};
+
+// print to console the tests for Palindromicity in the Test Set:
+console.log(testforP(testSet));
+
+// ANSWER: 906,609
